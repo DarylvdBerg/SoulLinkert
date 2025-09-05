@@ -1,6 +1,6 @@
 'use client';
 
-import { Run, useRunStore } from '@/stores/runsStore';
+import { RunData, useRunStore } from '@/stores/runsStore';
 import { v4 as uuidv4 } from 'uuid';
 import { JSX, useState } from 'react';
 import { Generation } from 'pokenode-ts';
@@ -44,8 +44,8 @@ export const CreateRunForm = ({ generations }: { generations: Generation[] }): J
             return;
         }
 
-        const run: Run = {
-            identifier: guid,
+        const run: RunData = {
+            id: guid,
             generation: selectedRegion.name,
             region: selectedRegion.main_region.name,
             playerOne: user.user_metadata.full_name,

@@ -8,11 +8,14 @@ import { PokemonClient } from 'pokenode-ts';
 import { PairData, PokemonWrapper, TypeExtended } from '@/types/pair';
 import { PairState } from '../pair/Pair';
 import { useRouter } from 'next/navigation';
+import AddPairAction from '@/utils/serverActions/addPairAction';
 
 export const AddPairForm = ({
+    runId,
     locations,
     pokemonList,
 }: {
+    runId: string;
     locations: string[];
     pokemonList: string[];
 }): JSX.Element => {
@@ -62,6 +65,8 @@ export const AddPairForm = ({
             state: PairState.ALIVE,
             caughtOnRoute: location,
         };
+
+        await AddPairAction(runId, pair);
 
         addPair(pair);
         router.back();

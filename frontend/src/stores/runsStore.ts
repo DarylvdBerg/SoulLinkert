@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
 interface RunState {
-    runs: Run[];
-    getRun: (identifier: string) => Run;
-    createRun: (run: Run) => void;
+    runs: RunData[];
+    getRun: (identifier: string) => RunData;
+    createRun: (run: RunData) => void;
 }
 
-export type Run = {
-    identifier: string;
+export type RunData = {
+    id: string;
     generation: string;
     region: string;
     gameName: string;
@@ -18,12 +18,12 @@ export type Run = {
 
 export const useRunStore = create<RunState>()((set, get) => ({
     runs: [],
-    getRun: (identifier: string): Run => {
-        const run = get().runs.find((run) => run.identifier === identifier);
+    getRun: (identifier: string): RunData => {
+        const run = get().runs.find((run) => run.id === identifier);
         if (!run) {
             throw new Error(`Run with identifier "${identifier}" not found`);
         }
         return run;
     },
-    createRun: (run: Run) => set((state) => ({ runs: [...state.runs, run] })),
+    createRun: (run: RunData) => set((state) => ({ runs: [...state.runs, run] })),
 }));

@@ -24,5 +24,5 @@ export default async function AddPair({ params }: { params: Promise<{ id: string
         return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     });
 
-    return <AddPairForm locations={locations} pokemonList={pokemonList} />;
+    return <AddPairForm runId={id} locations={locations} pokemonList={pokemonList} />;
 }

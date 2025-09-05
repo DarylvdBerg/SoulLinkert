@@ -13,8 +13,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
         redirect('/login');
     }
 
-    console.log(user);
-
     return (
         <Flex direction={'column'} minH="100vh">
             <Flex

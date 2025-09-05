@@ -1,11 +1,11 @@
 'use server';
 
-import { Run } from '@/stores/runsStore';
+import { RunData } from '@/stores/runsStore';
 import { createClient } from '../supabase/server';
 import { AddPlayerRunAction } from './addPlayerRunAction';
 import { User } from '@supabase/supabase-js';
 
-export async function addRunAction(run: Run, user: User) {
+export async function addRunAction(run: RunData, user: User) {
     const client = await createClient();
     const { data, error } = await client
         .from('run')
