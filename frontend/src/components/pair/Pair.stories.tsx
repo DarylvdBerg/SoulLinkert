@@ -1,4 +1,3 @@
-
 import { Meta, StoryObj } from '@storybook/react';
 import { Pair, PairState } from './Pair';
 import bulbasour from './bulbasour.json';
@@ -11,9 +10,16 @@ const meta: Meta<typeof Pair> = {
     args: {
         pair: {
             state: PairState.ALIVE,
-            pokemon1: bulbasour,
-            pokemon2: charmander
-        }
+            pokemon1: {
+                pokemon: bulbasour,
+                types: [],
+            },
+            pokemon2: {
+                pokemon: charmander,
+                types: [],
+            },
+            caughtOnRoute: 'Route 1',
+        },
     },
 };
 
@@ -24,10 +30,18 @@ type Story = StoryObj<typeof Pair>;
 export const Default: Story = {};
 export const WithDeadPairState: Story = {
     args: {
-         pair: {
+        pair: {
             state: PairState.DEAD,
-            pokemon1: bulbasour,
-            pokemon2: charmander
-         }
-    }
+            pokemon1: {
+                pokemon: bulbasour,
+                types: [],
+            },
+            pokemon2: {
+                pokemon: charmander,
+                types: [],
+            },
+
+            caughtOnRoute: 'Route 1',
+        },
+    },
 };
