@@ -10,7 +10,6 @@ export default async function LoginPage() {
     if (user) {
         redirect('/runs');
     }
-
     // Build the OAuth URL for Discord
     return <LoginForm />;
 }

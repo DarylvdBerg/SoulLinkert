@@ -11,8 +11,9 @@ export type Run = {
     generation: string;
     region: string;
     gameName: string;
-    playerOne: string;
-    playerTwo: string;
+    playerOne?: string;
+    playerTwo?: string;
+    isPlayable: boolean;
 };
 
 export const useRunStore = create<RunState>()((set, get) => ({

@@ -8,18 +8,17 @@ import { Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { Selector } from '../selector';
 import { FormField } from '../formField';
 import { useRouter } from 'next/navigation';
+import { addRunAction } from '@/utils/serverActions/addRunAction';
+import { createClient } from '@/utils/supabase/client';
 
 export const CreateRunForm = ({ generations }: { generations: Generation[] }): JSX.Element => {
     const { createRun } = useRunStore();
     const router = useRouter();
-
     const [region, setRegion] = useState<string>();
     const [gameName, setGameName] = useState<string>();
     const [hasError, setHasError] = useState<boolean>(false);
 
-    // We'll somehow need to relate the players to some kind of actual user.
-    const [playerOne, setPlayerOne] = useState<string>();
-    const [playerTwo, setPlayerTwo] = useState<string>();
+    const supabase = createClient();
 
     const regionNames = generations.map((gen) => gen.main_region.name);
 
@@ -27,7 +26,7 @@ export const CreateRunForm = ({ generations }: { generations: Generation[] }): J
         return value === '' || value === null || value === undefined;
     };
 
-    const submitCreateRun = () => {
+    async function submitCreateRun() {
         setHasError(false);
         const guid = uuidv4();
         const selectedRegion = generations.find((gen) => gen.main_region.name == region);
@@ -36,8 +35,12 @@ export const CreateRunForm = ({ generations }: { generations: Generation[] }): J
             return;
         }
 
-        if (validateField(playerOne) || validateField(playerTwo) || validateField(gameName)) {
+        if (validateField(gameName)) {
             setHasError(true);
+            return;
+        }
+        const user = (await supabase.auth.getUser()).data.user;
+        if (user === undefined || user === null) {
             return;
         }
 
@@ -45,14 +48,16 @@ export const CreateRunForm = ({ generations }: { generations: Generation[] }): J
             identifier: guid,
             generation: selectedRegion.name,
             region: selectedRegion.main_region.name,
+            playerOne: user.user_metadata.full_name,
             gameName: gameName!,
-            playerOne: playerOne!,
-            playerTwo: playerTwo!,
+            isPlayable: false,
         };
+
+        await addRunAction(run, user);
 
         createRun(run);
         router.back();
-    };
+    }
 
     return (
         <Flex direction="column">
@@ -70,16 +75,6 @@ export const CreateRunForm = ({ generations }: { generations: Generation[] }): J
                 label="Game name"
                 isRequired={true}
                 onFieldValueChangeCallback={setGameName}
-            />
-            <FormField
-                label="Player one name"
-                isRequired={true}
-                onFieldValueChangeCallback={setPlayerOne}
-            />
-            <FormField
-                label="Player two name"
-                isRequired={true}
-                onFieldValueChangeCallback={setPlayerTwo}
             />
             <Button onClick={submitCreateRun}>Create run</Button>
         </Flex>

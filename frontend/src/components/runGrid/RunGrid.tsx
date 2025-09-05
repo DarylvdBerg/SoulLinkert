@@ -2,10 +2,16 @@
 
 import { Run, useRunStore } from '@/stores/runsStore';
 import { Flex, Grid, GridItem, LinkBox, LinkOverlay, Text } from '@chakra-ui/react';
-import { JSX } from 'react';
+import { JSX, useEffect } from 'react';
 
-export const RunGrid = (): JSX.Element => {
-    const { runs } = useRunStore();
+export const RunGrid = ({ playerRuns }: { playerRuns: Run[] }): JSX.Element => {
+    const { runs, createRun } = useRunStore();
+
+    useEffect(() => {
+        playerRuns.map((run) => {
+            createRun(run);
+        });
+    }, []);
 
     return (
         <>
@@ -15,10 +21,10 @@ export const RunGrid = (): JSX.Element => {
                         <LinkBox>
                             <Flex direction={'column'}>
                                 <Text>Game name: {run.gameName}</Text>
-                                <Text>Player one: {run.playerOne}</Text>
-                                <Text>Player two: {run.playerTwo}</Text>
+                                <Text>Player one: {run?.playerOne ?? ''}</Text>
+                                <Text>Player two: {run?.playerTwo ?? ''}</Text>
                                 <Text>Generation: {run.generation}</Text>
-                                <LinkOverlay href={`/runs/${run.identifier}`} />
+                                {run.isPlayable && <LinkOverlay href={`/runs/${run.identifier}`} />}
                             </Flex>
                         </LinkBox>
                     </GridItem>

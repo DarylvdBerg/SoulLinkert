@@ -1,4 +1,5 @@
 import { CreateRunForm } from '@/components/createRunForm/CreateRunForm';
+import { Run } from '@/stores/runsStore';
 import { GameClient, Generation } from 'pokenode-ts';
 
 export default async function CreateRun() {
