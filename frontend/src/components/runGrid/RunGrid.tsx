@@ -8,9 +8,11 @@ export const RunGrid = ({ playerRuns }: { playerRuns: RunData[] }): JSX.Element 
     const { runs, createRun } = useRunStore();
 
     useEffect(() => {
-        playerRuns.map((run) => {
-            createRun(run);
-        });
+        if (runs.length === 0) {
+            playerRuns.map((run) => {
+                createRun(run);
+            });
+        }
     }, []);
 
     return (

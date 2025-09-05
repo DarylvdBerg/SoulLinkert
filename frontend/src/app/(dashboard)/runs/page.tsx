@@ -26,6 +26,7 @@ export default async function Runs() {
             playerOne: dbResult.run?.player_one ?? '',
             playerTwo: dbResult.run?.player_two ?? '',
             isPlayable: dbResult.run?.is_playable ?? false,
+            region: dbResult.run?.region,
         };
     }) as unknown as RunData[];
 

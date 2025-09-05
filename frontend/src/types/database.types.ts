@@ -100,6 +100,7 @@ export type Database = {
                     is_playable: boolean;
                     player_one: string | null;
                     player_two: string | null;
+                    region: string | null;
                 };
                 Insert: {
                     created_at?: string;
@@ -109,6 +110,7 @@ export type Database = {
                     is_playable?: boolean;
                     player_one?: string | null;
                     player_two?: string | null;
+                    region?: string | null;
                 };
                 Update: {
                     created_at?: string;
@@ -118,6 +120,7 @@ export type Database = {
                     is_playable?: boolean;
                     player_one?: string | null;
                     player_two?: string | null;
+                    region?: string | null;
                 };
                 Relationships: [];
             };
