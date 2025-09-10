@@ -2,6 +2,9 @@ import { PairData, PokemonWrapper } from '@/types/pair';
 import { Button, chakra, Flex, Image, Text } from '@chakra-ui/react';
 import { JSX } from 'react';
 import { usePairStore } from '@/stores/pairStore';
+import { createClient } from '@/utils/supabase/client';
+import { Database } from '@/types/database.types';
+import UpdatePairAction from '@/utils/serverActions/updatePairAction';
 
 export enum PairState {
     ALIVE,
@@ -11,9 +14,13 @@ export enum PairState {
 export const Pair = ({ pair, index }: { pair: PairData; index: number }): JSX.Element => {
     const { updatePair } = usePairStore();
 
-    const RipPair = () => {
+    async function RipPair(){
         const updatedPair = { ...pair, state: PairState.DEAD };
-        updatePair(index, updatedPair);
+        const success = await UpdatePairAction(updatedPair);
+        
+        if(success){
+            updatePair(index, updatedPair);
+        }
     };
 
     const TypeSprites = (wrapper: PokemonWrapper) => {

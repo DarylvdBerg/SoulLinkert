@@ -47,6 +47,7 @@ export type PokemonWrapper = {
 }
 
 export type PairData = {
+    id?: string,
     pokemon1: PokemonWrapper
     pokemon2: PokemonWrapper
     state: PairState

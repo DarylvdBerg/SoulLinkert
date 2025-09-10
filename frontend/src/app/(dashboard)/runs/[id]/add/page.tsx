@@ -5,7 +5,6 @@ import { LocationClient, PokemonClient } from 'pokenode-ts';
 
 export default async function AddPair({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    console.log(id);
     const supabase = await createClient<Database>();
 
     const { data, error } = await supabase.from('run').select().eq('id', id);
@@ -14,9 +13,8 @@ export default async function AddPair({ params }: { params: Promise<{ id: string
         console.error(error);
         return;
     }
-    console.log(data);
+
     const region = data?.[0].region;
-    console.log(region);
     if (region === undefined || region === null || region === '') {
         return;
     }

@@ -1,3 +1,5 @@
+
+import { JoinRun } from '@/components/joinRun';
 import { RunGrid } from '@/components/runGrid/RunGrid';
 import { RunData } from '@/stores/runsStore';
 import { Database } from '@/types/database.types';
@@ -33,6 +35,7 @@ export default async function Runs() {
     return (
         <>
             <Link href="/runs/create">Create new run</Link>
+            <JoinRun />
             <RunGrid playerRuns={playerRuns} />
         </>
     );

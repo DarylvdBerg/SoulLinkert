@@ -16,13 +16,14 @@ export default async function Run({ params }: { params: Promise<{ id: string }> 
             return;
         }
         const pair: PairData = JSON.parse(pairStringData);
+        pair.id = dbResult.id; // Set id separate since it is not in the json.
         return pair;
     }) as unknown as PairData[];
 
     return (
         <>
             <Link href={`${id}/add`}>Add pair</Link>
-            <PairGrid runPairs={pairData} />
+            <PairGrid runId={id} runPairs={pairData} />
         </>
     );
 }

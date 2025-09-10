@@ -69,7 +69,7 @@ export const AddPairForm = ({
         await AddPairAction(runId, pair);
 
         addPair(pair);
-        router.back();
+        router.push(`/runs/${runId}`); // Redirect back to run page
     }
 
     return (
